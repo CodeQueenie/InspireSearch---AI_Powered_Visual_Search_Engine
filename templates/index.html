@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}InspireSearch - AI-Powered Visual Search{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="hero-section mb-5">
+            <h1 class="display-4 mb-3">InspireSearch</h1>
+            <p class="lead mb-4">Upload an image and discover visually similar inspirations using AI-powered search.</p>
+            
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <form action="{{ url_for('search') }}" method="post" enctype="multipart/form-data" id="search-form">
+                        <div class="mb-4 text-center">
+                            <div class="image-upload-container" id="upload-area">
+                                <div class="image-preview-wrapper mb-3">
+                                    <img id="image-preview" src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Image Preview" class="img-fluid rounded d-none">
+                                    <div id="upload-placeholder" class="upload-placeholder">
+                                        <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                                        <p>Drag & drop an image or click to browse</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="custom-file-upload">
+                                    <input type="file" name="file" id="file-upload" class="form-control" accept=".jpg,.jpeg,.png" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg" id="search-button">
+                                <i class="fas fa-search me-2"></i> Find Similar Images
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-section mt-5">
+            <h2 class="mb-4">How It Works</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-upload fa-2x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Upload</h5>
+                            <p class="card-text">Upload any image you want to find inspiration for.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-brain fa-2x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Process</h5>
+                            <p class="card-text">Our AI extracts visual features using ResNet50.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-images fa-2x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Discover</h5>
+                            <p class="card-text">Get the top 5 most visually similar images instantly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fileUpload = document.getElementById("file-upload");
+        const imagePreview = document.getElementById("image-preview");
+        const uploadPlaceholder = document.getElementById("upload-placeholder");
+        const searchForm = document.getElementById("search-form");
+        const searchButton = document.getElementById("search-button");
+        const uploadArea = document.getElementById("upload-area");
+        
+        // Make the upload area clickable
+        uploadArea.addEventListener("click", function(e) {
+            fileUpload.click();
+        });
+        
+        // Preview the selected image
+        fileUpload.addEventListener("change", function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove("d-none");
+                    uploadPlaceholder.classList.add("d-none");
+                }
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        
+        // Handle form submission
+        searchForm.addEventListener("submit", function() {
+            searchButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
+            searchButton.disabled = true;
+        });
+        
+        // Prevent form submission when clicking on the upload area
+        uploadArea.addEventListener("click", function(e) {
+            e.stopPropagation();
+        });
+        
+        // Drag and drop functionality
+        const dropArea = document.querySelector(".image-upload-container");
+        
+        ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ["dragenter", "dragover"].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ["dragleave", "drop"].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.classList.add("highlight");
+        }
+        
+        function unhighlight() {
+            dropArea.classList.remove("highlight");
+        }
+        
+        dropArea.addEventListener("drop", handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files && files[0]) {
+                fileUpload.files = files;
+                
+                const event = new Event("change");
+                fileUpload.dispatchEvent(event);
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}About - InspireSearch{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="display-5 mb-4">About InspireSearch</h1>
+                
+                <p class="lead">InspireSearch is an AI-powered visual search engine that helps you find visually similar images using deep learning technology.</p>
+                
+                <hr class="my-4">
+                
+                <h2>Technology Stack</h2>
+                <p>This project demonstrates several key technologies and concepts:</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-brain text-primary me-2"></i>Deep Learning</h5>
+                                <p class="card-text">Uses ResNet50, a pre-trained convolutional neural network, to extract high-dimensional feature vectors from images.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-search text-primary me-2"></i>Similarity Search</h5>
+                                <p class="card-text">Leverages Faiss, a library developed by Facebook AI Research for efficient similarity search and clustering of dense vectors.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-server text-primary me-2"></i>Web Framework</h5>
+                                <p class="card-text">Built with Flask, a lightweight WSGI web application framework in Python, making it easy to create web services.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-cloud text-primary me-2"></i>Cloud Deployment</h5>
+                                <p class="card-text">Designed to be easily deployed on AWS Free Tier services like Elastic Beanstalk or EC2.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="mt-4">How It Works</h2>
+                <ol class="list-group list-group-numbered mb-4">
+                    <li class="list-group-item">When you upload an image, it's processed by a pre-trained ResNet50 model.</li>
+                    <li class="list-group-item">The model extracts a 2048-dimensional feature vector that represents the visual characteristics of your image.</li>
+                    <li class="list-group-item">This feature vector is compared against pre-computed vectors from our image dataset using Faiss.</li>
+                    <li class="list-group-item">The system finds the most similar images based on the Euclidean distance between vectors.</li>
+                    <li class="list-group-item">The top 5 most similar images are displayed, along with their similarity scores.</li>
+                </ol>
+                
+                <h2 class="mt-4">Project Purpose</h2>
+                <p>This project demonstrates skills in:</p>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">Computer Vision and Deep Learning</li>
+                    <li class="list-group-item">Vector Similarity Search</li>
+                    <li class="list-group-item">Web Application Development</li>
+                    <li class="list-group-item">Cloud Deployment</li>
+                    <li class="list-group-item">User Interface Design</li>
+                </ul>
+                
+                <div class="text-center mt-5">
+                    <a href="https://github.com/CodeQueenie/InspireSearch---AI_Powered_Visual_Search_Engine" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-github me-2"></i> View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

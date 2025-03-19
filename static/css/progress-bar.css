@@ -1,0 +1,45 @@
+/* 
+Progress bar styles for InspireSearch
+
+Copyright (c) 2025 Nicole LeGuern
+Licensed under MIT License with attribution requirements
+*/
+
+.custom-progress-bar {
+    display: flex;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+    margin-bottom: 0.5rem;
+}
+
+.custom-progress-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    background-color: #0d6efd;
+    color: white;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Width classes for progress bars */
+.width-0 { width: 0%; }
+.width-10 { width: 10%; }
+.width-20 { width: 20%; }
+.width-30 { width: 30%; }
+.width-40 { width: 40%; }
+.width-50 { width: 50%; }
+.width-60 { width: 60%; }
+.width-70 { width: 70%; }
+.width-80 { width: 80%; }
+.width-90 { width: 90%; }
+.width-100 { width: 100%; }
+
+.similarity-text {
+    margin-top: 0.25rem;
+    color: #6c757d;
+    font-size: 0.875rem;
+}

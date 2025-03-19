@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - InspireSearch{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/progress-bar.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h3">Search Results</h1>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i> New Search
+            </a>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Query Image</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename=query_image) }}" alt="Query Image" class="img-fluid rounded query-image">
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Similar Images</h5>
+            </div>
+            <div class="card-body">
+                {% if results %}
+                    <div class="row results-container">
+                        {% for result in results %}
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="card h-100 result-card">
+                                    <img src="{{ url_for('static', filename=result.path) }}" alt="Similar Image" class="card-img-top result-image">
+                                    <div class="card-body">
+                                        <div class="custom-progress-bar">
+                                            {% set rounded_similarity = result.similarity|round|int %}
+                                            {% set width_class = "width-" ~ (rounded_similarity // 10 * 10) %}
+                                            <div class="custom-progress-bar-fill {{ width_class }}">
+                                                {{ rounded_similarity }}%
+                                            </div>
+                                        </div>
+                                        <p class="similarity-text">
+                                            Similarity: {{ rounded_similarity }}%
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        No similar images found. Try uploading a different image or adding more images to the dataset.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">How It Works</h5>
+            </div>
+            <div class="card-body">
+                <p>InspireSearch uses a pre-trained ResNet50 model to extract visual features from images. These features are then compared using Faiss, a library for efficient similarity search.</p>
+                <p>The similarity score represents how visually similar each result is to your query image. Higher percentages indicate greater similarity.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add animation to results
+        const resultCards = document.querySelectorAll(".result-card");
+        resultCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add("animate-in");
+            }, 100 * index);
+        });
+    });
+</script>
+{% endblock %}
