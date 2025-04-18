@@ -5,8 +5,6 @@
 ![TensorFlow](https://img.shields.io/badge/tensorflow-2.4%2B-orange)
 ![Flask](https://img.shields.io/badge/flask-2.0%2B-green)
 
-InspireSearch is a sophisticated visual search engine that leverages deep learning to find visually similar images. Built with TensorFlow, Faiss, and Flask, this application demonstrates advanced computer vision techniques in a user-friendly web interface.
-
 > **Project Description**: InspireSearch is an AI-powered visual search engine that uses ResNet50 for feature extraction and Faiss for similarity search. Upload any image to instantly find visually similar content from your dataset. This project showcases expertise in deep learning, computer vision, and web development while demonstrating practical implementation of vector similarity search in a production-ready Flask application.
 
 ![InspireSearch Results](static/img/results_screenshot.png)
